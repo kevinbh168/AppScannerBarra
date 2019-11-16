@@ -99,7 +99,7 @@
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@id/tvstock"
         android:hint="Ingresar Stock"
-        android:inputType="textCapCharacters" />
+        android:inputType="phone" />
 
     <ListView
         android:id="@+id/LVMostrar"

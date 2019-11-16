@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:padding="32dp"
-        android:onClick="openScanner"
         android:text="Scannear"
         android:textColor="@color/icons"
         android:background="@color/accent"/>

@@ -1,4 +1,4 @@
-package com.manuel.scanfinalapp;
+package com.tecsup.scanfinalapp;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -10,13 +10,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
-import com.manuel.scanfinalapp.models.Producto;
+import com.tecsup.scanfinalapp.models.Producto;
 import com.orm.SugarRecord;
 
 import java.util.List;
@@ -25,8 +25,9 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
-    private Button btnRegister;
+    private Button btnRegister,btnScan;
     private ZXingScannerView mScannerView;
+    private int contador;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,23 +36,28 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         //Abrir ventana para registrar
         btnRegister=findViewById(R.id.btn_register);
+        btnScan=findViewById(R.id.btn_scan);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 entrarFormulario("","Registrar nuevo producto","insertar");
             }
         });
+        btnScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openScanner();
+            }
+        });
+
         checkAllPermissions();
     }
 
     @Override
     public void handleResult(Result rawResult) {
 
+
         final String codigo=rawResult.getText();
-        Log.v("HandleResult",codigo);
-
-        SugarRecord.find(Producto.class,"codigo=?",codigo);
-
         List<Producto> productos=SugarRecord.find(Producto.class,"codigo=?",codigo);
 
         if(productos.size()>0){
@@ -70,15 +76,15 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    cancelar();
+                    return;
                 }
             });
             AlertDialog alertDialog=builder.create();
             alertDialog.show();
         }else{
             AlertDialog.Builder builder=new AlertDialog.Builder(this);
-            builder.setTitle("Error");
 
+            builder.setTitle("ERROR");
             builder.setMessage("Producto no existente, ¿Desea registrar el producto?");
             builder.setCancelable(false);
             builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
@@ -90,14 +96,15 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    cancelar();
+                    return;
                 }
             });
+
             AlertDialog alertDialog=builder.create();
             alertDialog.show();
         }
         mScannerView.resumeCameraPreview(this);
-        return;
+
     }
 
     public void entrarFormulario(String codigo, String titulo,String actividad){
@@ -108,9 +115,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         startActivity(intent);
     }
 
-    public void cancelar(){
-        return;
-    }
 
 
     private static final int PERMISSIONS_REQUEST = 100;
@@ -146,10 +150,24 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
         }
     }
 
-    public void openScanner(View v){
+    public void openScanner(){
         mScannerView=new ZXingScannerView(this);
         setContentView(mScannerView);
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
+        contador=1;
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && contador==1) {
+            startActivity(new Intent(MainActivity.this,MainActivity.class));
+            contador=0;
+        }else{
+            finish();
+        }
+
+        return true;
     }
 }

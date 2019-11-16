@@ -1,7 +1,6 @@
-package com.manuel.scanfinalapp;
+package com.tecsup.scanfinalapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manuel.scanfinalapp.models.Producto;
+import com.tecsup.scanfinalapp.models.Producto;
 import com.orm.SugarRecord;
 
 import java.util.ArrayList;
@@ -132,17 +131,27 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void actualizar(Long codigo){
         String textoCantidad=etCantidad.getText().toString();
-        if(tipoMovimiento.getSelectedItemPosition()!=0 || !textoCantidad.isEmpty() ){
+        if(tipoMovimiento.getSelectedItemPosition()!=0 && !textoCantidad.isEmpty() ){
             int cantidad=Integer.parseInt(textoCantidad);
             int movimiento=tipoMovimiento.getSelectedItemPosition();
             Producto producto=SugarRecord.findById(Producto.class,codigo);
             if(movimiento==1) {
-                producto.setStock(producto.getStock() + cantidad);
+                if(cantidad>0){
+                    producto.setStock(producto.getStock() + cantidad);
+                }else{
+                    Toasty.error(this,"Ingrese valor valido",Toasty.LENGTH_SHORT).show();
+                }
             }else{
-                producto.setStock(producto.getStock() - cantidad);
+                if(cantidad<0) {
+                    producto.setStock(producto.getStock() - cantidad);
+                }else{
+                    Toasty.error(this,"Ingrese valor valido",Toasty.LENGTH_SHORT).show();
+                }
             }
             producto.save();
             Toasty.success(this,"Cambios realizados correctamente",Toasty.LENGTH_SHORT).show();
+            Intent intent=new Intent(this,MainActivity.class);
+            startActivity(intent);
         }else{
             Toasty.warning(this,"Debe seleccionar el tipo de movimiento o ingresar valor",Toasty.LENGTH_SHORT).show();
         }
@@ -153,36 +162,31 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void save(){
 
-        try {
             String codigo=etcodigo.getText().toString();
             String categoria=etgrupo.getText().toString();
             String descripcion=etmarca.getText().toString();
-            int stock=Integer.parseInt(etserie.getText().toString());
+            String cantidad=etserie.getText().toString();
 
-            Producto producto=new Producto();
-            producto.setCodigo(codigo);
-            producto.setCategoria(categoria);
-            producto.setDescripcion(descripcion);
-            producto.setStock(stock);
 
-            SugarRecord.save(producto);
-
-            if(codigo.isEmpty() || categoria.isEmpty() || descripcion.isEmpty() || stock<0){
+            if(codigo.isEmpty() || categoria.isEmpty() || descripcion.isEmpty() || cantidad.isEmpty()){
 
                 Toasty.error(this, "Debe completar el formulario", Toast.LENGTH_SHORT, true).show();
                 return;
             }else{
+                int stock=Integer.parseInt(cantidad);
+                Producto producto=new Producto();
+                producto.setCodigo(codigo);
+                producto.setCategoria(categoria);
+                producto.setDescripcion(descripcion);
+                producto.setStock(stock);
+
+                SugarRecord.save(producto);
                 Toasty.success(this, "El producto se registro correctamente", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
-        }catch (Exception e){
-            Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
 
     }
-
-
 
     public void cargarList(){
         List<Producto> productos = Producto.listAll(Producto.class);

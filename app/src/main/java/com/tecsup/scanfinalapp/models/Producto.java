@@ -1,4 +1,4 @@
-package com.manuel.scanfinalapp.models;
+package com.tecsup.scanfinalapp.models;
 
 import com.orm.SugarRecord;
 import com.orm.dsl.Table;
