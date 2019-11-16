@@ -7,18 +7,19 @@ import com.orm.dsl.Table;
 public class Producto extends SugarRecord {
     private Long id;
     private String codigo;
-    private String grupo;
-    private String marca;
-    private String modelo;
-    private String serie;
+    private String descripcion;
+    private String categoria;
+    private int stock;
 
     public Producto() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -31,35 +32,27 @@ public class Producto extends SugarRecord {
         this.codigo = codigo;
     }
 
-    public String getGrupo() {
-        return grupo;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getMarca() {
-        return marca;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
-    public String getModelo() {
-        return modelo;
+    public int getStock() {
+        return stock;
     }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public String getSerie() {
-        return serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

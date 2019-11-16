@@ -5,76 +5,122 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="32dp"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tvtitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Menú para registrar los productos"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@android:color/black"
+        android:text="Registro para producto nuevo"
         android:textAlignment="center"
         android:textSize="20sp" />
+
+    <RelativeLayout
+        android:id="@+id/rlRegistroDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/tvcodigo"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Codigo:"
+        android:textSize="20sp"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentStart="true"/>
     <EditText
         android:id="@+id/etCodigo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvtitulo"
+        android:layout_toEndOf="@+id/tvcodigo"
+        android:layout_marginTop="40dp"
         android:hint="Ingrese código"
         android:inputType="textCapCharacters"/>
+
+    <TextView
+        android:id="@+id/tvcategoria"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Categoria:"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tvcodigo"
+        android:layout_alignParentStart="true"/>
     <EditText
         android:id="@+id/etGrupo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tvcodigo"
         android:layout_below="@+id/etCodigo"
-        android:hint="Ingrese grupo"
+        android:hint="Ingrese categoria"
         android:inputType="textCapCharacters"/>
+
+    <TextView
+        android:id="@+id/tvdescripcion"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:text="Descripcion:"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tvcategoria"
+        android:layout_alignParentStart="true"/>
+
     <EditText
         android:id="@+id/etMarca"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etGrupo"
-        android:hint="Marca"
+        android:layout_toEndOf="@+id/tvdescripcion"
+        android:layout_marginTop="5dp"
+        android:hint="Ingresar Descripcion"
         android:inputType="textCapCharacters"/>
-    <EditText
-        android:id="@+id/etModelo"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/tvstock"
+        android:layout_width="114dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etMarca"
-        android:hint="Modelo"
-        android:inputType="textCapCharacters"/>
+        android:layout_below="@+id/tvdescripcion"
+        android:layout_alignParentStart="true"
+        android:text="Existencia:"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp" />
+
+
     <EditText
         android:id="@+id/etSerie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etModelo"
-        android:hint="Serie"
-        android:inputType="textCapCharacters"/>
+        android:layout_below="@+id/etMarca"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/tvstock"
+        android:hint="Ingresar Stock"
+        android:inputType="textCapCharacters" />
 
-
-    <LinearLayout
-        android:id="@+id/ll01"
+    <ListView
+        android:id="@+id/LVMostrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etSerie"
-        android:orientation="horizontal"
-        android:weightSum="100">
-
-    </LinearLayout>
-
-
+        android:layout_below="@+id/etSerie" />
 
     <LinearLayout
         android:id="@+id/ll03"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll01"
-        android:weightSum="100">
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="1dp">
 
         <Button
             android:id="@+id/btnConsultar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
+            android:textSize="18dp"
+            android:padding="15dp"
             android:text="Consultar" />
 
         <Button
@@ -82,29 +128,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
+            android:textSize="18dp"
+            android:padding="15dp"
             android:text="Guardar" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll02"
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rlCambios"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll01"
-        android:orientation="horizontal"
-        android:weightSum="100">
-    </LinearLayout>
+        android:layout_height="match_parent"
+        >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll03">
-        <ListView
+        <TextView
+            android:id="@+id/tvmovimiento"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Movimiento:"
+            android:textSize="20sp"
+            android:layout_marginTop="45dp"
+            android:layout_alignParentStart="true"/>
+
+        <Spinner
+            android:id="@+id/spinnerMovimiento"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/tvmovimiento"
+            android:entries="@array/movimientos"
+            android:hint="Ingrese código"
+            android:inputType="textCapCharacters" />
+
+        <TextView
+            android:id="@+id/tvcantidad"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Cantidad:"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tvmovimiento"
+            android:layout_alignParentStart="true"/>
+        <EditText
+            android:id="@+id/etcantidad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/LVMostrar" />
-    </LinearLayout>
-
-
-
+            android:layout_toEndOf="@+id/tvcantidad"
+            android:layout_below="@+id/spinnerMovimiento"
+            android:layout_marginTop="4dp"
+            android:hint="Ingrese categoria"
+            android:inputType="number"/>
+        <Button
+            android:id="@+id/btnCambios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Realizar Cambios"
+            android:textSize="18dp"
+            android:padding="15dp"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 </RelativeLayout>

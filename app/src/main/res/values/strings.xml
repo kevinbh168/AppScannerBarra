@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">Figoal Scan</string>
+    <string name="app_name">Escaner de Barras</string>
     <string name="Title_scan">Escanear</string>
+    <array name="movimientos">
+        <item>--Seleccione--</item>
+        <item>Ingreso</item>
+        <item>Salida</item>
+    </array>
 </resources>
