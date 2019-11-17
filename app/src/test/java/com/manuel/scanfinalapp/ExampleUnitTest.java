@@ -1,4 +1,4 @@
-package com.tecsup.scanfinalapp;
+package com.manuel.scanfinalapp;
 
 import org.junit.Test;
 

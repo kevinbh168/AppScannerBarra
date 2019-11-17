@@ -1,4 +1,4 @@
-package com.tecsup.scanfinalapp;
+package com.manuel.scanfinalapp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +13,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tecsup.scanfinalapp.models.Producto;
+import com.manuel.scanfinalapp.models.Producto;
 import com.orm.SugarRecord;
+import com.manuel.scanfinalapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent=new Intent(RegisterActivity.this,RegisterActivity.class);
                     intent.putExtra("codigo",codigo);
-                    intent.putExtra("titulo", titulo);
+                    intent.putExtra("titulo", "Movimiento de stock");
                     intent.putExtra("actividad","modificarStock");
                     startActivity(intent);
                 }
@@ -102,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
         if(actividad.equals("modificarStock")){
+            tvtitulo.setText(titulo);
             rlRegistoDetalle.setVisibility(View.GONE);
             rlCambios.setVisibility(View.VISIBLE);
 
@@ -109,8 +111,6 @@ public class RegisterActivity extends AppCompatActivity {
             SugarRecord.find(Producto.class,"codigo=?",codigo);
             List<Producto> productos=SugarRecord.find(Producto.class,"codigo=?",codigo);
             final Producto prod=productos.get(0);
-
-
 
 
             btnRealizarCambios.setOnClickListener(new View.OnClickListener() {
@@ -138,17 +138,23 @@ public class RegisterActivity extends AppCompatActivity {
             if(movimiento==1) {
                 if(cantidad>0){
                     producto.setStock(producto.getStock() + cantidad);
+                    producto.save();
+
                 }else{
                     Toasty.error(this,"Ingrese valor valido",Toasty.LENGTH_SHORT).show();
                 }
-            }else{
-                if(cantidad<0) {
-                    producto.setStock(producto.getStock() - cantidad);
+            }if(movimiento==2){
+                if(cantidad>0) {
+                    if(producto.getStock()>cantidad) {
+                        producto.setStock(producto.getStock() - cantidad);
+                        producto.save();
+                    }else{
+                        Toasty.error(this,"El stock es menor al numero ingresado",Toasty.LENGTH_SHORT).show();
+                    }
                 }else{
                     Toasty.error(this,"Ingrese valor valido",Toasty.LENGTH_SHORT).show();
                 }
             }
-            producto.save();
             Toasty.success(this,"Cambios realizados correctamente",Toasty.LENGTH_SHORT).show();
             Intent intent=new Intent(this,MainActivity.class);
             startActivity(intent);
@@ -190,12 +196,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void cargarList(){
         List<Producto> productos = Producto.listAll(Producto.class);
-        ArrayList<String> lista1=new ArrayList<String>();
-        for(int i=0;i<productos.size();i++){
-            Producto prod=productos.get(i);
-            lista1.add("Codigo: "+prod.getCodigo()+"\nCategoria: "+prod.getCategoria()+"\nDescripcion: "+prod.getDescripcion()+"\nStock: "+prod.getStock());
+        if(productos.size()>0) {
+            ArrayList<String> lista1 = new ArrayList<String>();
+            for (int i = 0; i < productos.size(); i++) {
+                Producto prod = productos.get(i);
+                lista1.add("Codigo: " + prod.getCodigo() + "\nCategoria: " + prod.getCategoria() + "\nDescripcion: " + prod.getDescripcion() + "\nStock: " + prod.getStock());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista1);
+            listaTodo.setAdapter(adapter);
+        }else{
+            Toasty.info(this,"No hay productos",Toasty.LENGTH_SHORT).show();
         }
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lista1);
-        listaTodo.setAdapter(adapter);
     }
 }

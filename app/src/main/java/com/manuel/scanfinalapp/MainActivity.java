@@ -1,4 +1,4 @@
-package com.tecsup.scanfinalapp;
+package com.manuel.scanfinalapp;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -16,8 +16,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
-import com.tecsup.scanfinalapp.models.Producto;
+import com.manuel.scanfinalapp.models.Producto;
 import com.orm.SugarRecord;
+import com.manuel.scanfinalapp.R;
 
 import java.util.List;
 
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle(R.string.Title_scan);
 
         //Abrir ventana para registrar
         btnRegister=findViewById(R.id.btn_register);
@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
     }
 
     public void openScanner(){
+        setTitle(R.string.Title_scan);
         mScannerView=new ZXingScannerView(this);
         setContentView(mScannerView);
         mScannerView.setResultHandler(this);

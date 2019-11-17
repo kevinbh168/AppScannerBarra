@@ -104,35 +104,35 @@
     <ListView
         android:id="@+id/LVMostrar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:layout_below="@+id/etSerie" />
 
-    <LinearLayout
-        android:id="@+id/ll03"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="1dp">
-
-        <Button
-            android:id="@+id/btnConsultar"
+        <LinearLayout
+            android:id="@+id/ll03"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:textSize="18dp"
-            android:padding="15dp"
-            android:text="Consultar" />
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp">
 
-        <Button
-            android:id="@+id/btnGuardar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="50"
-            android:textSize="18dp"
-            android:padding="15dp"
-            android:text="Guardar" />
+            <Button
+                android:id="@+id/btnConsultar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:padding="15dp"
+                android:text="Consultar"
+                android:textSize="18dp" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:padding="15dp"
+                android:text="Guardar"
+                android:textSize="18dp" />
+
+        </LinearLayout>
     </RelativeLayout>
     <RelativeLayout
         android:visibility="gone"
@@ -177,7 +177,7 @@
             android:layout_below="@+id/spinnerMovimiento"
             android:layout_marginTop="4dp"
             android:hint="Ingrese categoria"
-            android:inputType="number"/>
+            android:inputType="phone"/>
         <Button
             android:id="@+id/btnCambios"
             android:layout_width="match_parent"

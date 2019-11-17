@@ -1,4 +1,4 @@
-package com.tecsup.scanfinalapp;
+package com.manuel.scanfinalapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.tecsup.scanfinalapp", appContext.getPackageName());
+        assertEquals("com.manuel.scanfinalapp", appContext.getPackageName());
     }
 }
